@@ -1,0 +1,62 @@
+<project name="shopping-cart-core" default="build">
+	
+	<property name="project.title" value="shopping-cart-core" />
+	<property name="lib.dir" value="../../LIBS" />
+	<property name="classes.dir" value="classes" />
+	<property name="dist.dir" value="dist" />
+	<property name="src.dir" value="../src" />
+	<property name="test.src.dir" value="../test" />
+	<property name="reports.dir" value="reports" />
+	
+	<path id="build.class.path">
+		<pathelement path="${lib.dir}"/>
+		<!--fileset dir="${lib.dir}" /-->
+	</path>
+
+	<target name="clean">
+		<echo message="Cleaning ${project.title}" level="info" />
+		<delete dir="${classes.dir}" />
+		<delete failonerror="false">
+			<fileset dir="${dist.dir}" />
+		</delete>
+	</target>
+
+	<target name="compile" depends="clean">
+		<echo message="Compiling ${project.title}" level="info" />
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${src.dir}:${test.src.dir}" destdir="${classes.dir}" deprecation="on" debug="on" source="1.6" target="1.6">
+			<classpath refid="build.class.path" />
+		</javac>
+		<copy todir="${classes.dir}" preservelastmodified="true">
+			<fileset dir="${test.src.dir}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="package" description="Create binary distribution" depends="compile">
+		<echo message="Packaging ${project.title}" level="info" />
+		<mkdir dir="${dist.dir}" />
+		<jar jarfile="${dist.dir}/${project.title}.jar" basedir="${classes.dir}" />
+	</target>
+
+	<target name="test" description="Run all tests">
+		<echo message="Testing ${project.title}" level="info" />
+		<mkdir dir="${reports.dir}/junit" />
+		<junit fork="true" haltonfailure="true" haltonerror="false" printsummary="true" showoutput="true" filtertrace="true" failureproperty="true">
+			<jvmarg value="-Djava.awt.headless=true" />
+			<classpath>
+				<path refid="build.class.path" />
+				<pathelement location="${classes.dir}" />
+			</classpath>
+			<formatter type="xml" />
+			<batchtest fork="true" todir="${reports.dir}/junit" filtertrace="true">
+				<fileset dir="${test.src.dir}" />
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="build" depends="compile,test,package">
+		<echo message="Built ${project.title}" level="info" />
+	</target>
+</project>

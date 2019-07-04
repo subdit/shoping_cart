@@ -1,0 +1,12 @@
+create table basket (id bigint primary key, userid varchar(255) not null);
+create table basket_item (id bigint primary key, price double precision not null, quantity integer not null, items_id bigint not null, basket_id bigint not null);
+create table item (id bigint primary key, description varchar(255), name varchar(255) not null, price double precision not null);
+
+alter table basket_item add constraint FK3F6FA5ECF59CCC6 foreign key (basket_id) references basket (id);
+alter table basket_item add constraint FK3F6FA5EC98F3A8D9 foreign key (items_id) references item (id);
+
+insert into item (id,description,name,price) values (2,'Jelly icecream waffle cream','Jelly Beans',18.99);
+insert into item (id,description,name,price) values (3,'Jam Doughnut','Strawberry jam and Christmas pudding',23.00);
+insert into item (id,description,name,price) values (4,'Mallow Madness','Marshmellow wrap',8.50);
+insert into item (id,description,name,price) values (5,'Chocolate Cheese','Crunchy chocolate creamy cheese',17.50);
+insert into item (id,description,name,price) values (6,'Custard Crazy','Custard sauce with jelly and cream',13.55);
