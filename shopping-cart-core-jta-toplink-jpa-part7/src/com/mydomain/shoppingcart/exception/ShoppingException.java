@@ -3,7 +3,7 @@ package com.mydomain.shoppingcart.exception;
 import java.io.Serializable;
 
 /** 
- * @author Ross
+ * @author Kasidit
  */
 public class ShoppingException extends Exception implements Serializable {
 	private static final long serialVersionUID = 4803035244998352308L;
