@@ -12,7 +12,7 @@ import com.mydomain.shoppingcart.dao.BasketDao;
 import com.mydomain.shoppingcart.util.JPAUtil;
 
 /** 
- * @author Ross
+ * @author kasidit
  */
 @PersistenceContext(name="persistence/ShoppingCart", unitName="shopping-cart")
 public class BasketDaoImpl implements BasketDao {
